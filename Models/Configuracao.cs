@@ -10,7 +10,7 @@ public record Configuracao
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get;set; }
 
-    [Required(ErrorMessage = "Nome da marca é obrigatório")]
-    [Column("dias_de_locacao", TypeName = "varchar(100)")]
-    public string DiasDeLocacao { get;set; } = default!;
+    [Required(ErrorMessage = "Esse campo é obrigatório")]
+    [Column("dias_de_locacao", TypeName = "date")]
+    public DateOnly DiasDeLocacao { get;set; } = default!;
 }
