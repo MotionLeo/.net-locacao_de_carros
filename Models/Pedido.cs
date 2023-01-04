@@ -19,8 +19,8 @@ public record Pedido
 
     [Column("data_locacao", TypeName = "date")]
 
-    public string DataLocacao {get; set;} = default!;
+    public DateOnly DataLocacao {get; set;} = default!;
 
     [Column("data_entrega", TypeName = "date")]
-    public string DataEntrega {get; set;} = default!;
+    public DateOnly DataEntrega {get; set;} = default!;
 }
