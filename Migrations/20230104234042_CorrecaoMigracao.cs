@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LocacaoDeCarros.Migrations
 {
-    public partial class PrimeiraMigracao : Migration
+    public partial class CorrecaoMigracao : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,8 +21,8 @@ namespace LocacaoDeCarros.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     nome = table.Column<string>(type: "varchar(100)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    marca = table.Column<int>(type: "int", nullable: false),
-                    modelo = table.Column<int>(type: "int", nullable: false)
+                    id_marca = table.Column<int>(type: "int", nullable: false),
+                    id_modelo = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,7 +57,7 @@ namespace LocacaoDeCarros.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    dias_de_locacao = table.Column<DateOnly>(type: "date", nullable: false)
+                    dias_de_locacao = table.Column<DateTime>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,9 +102,9 @@ namespace LocacaoDeCarros.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     id_cliente = table.Column<int>(type: "int", nullable: false),
-                    carro = table.Column<int>(type: "int", nullable: false),
-                    data_locacao = table.Column<DateOnly>(type: "date", nullable: false),
-                    data_entrega = table.Column<DateOnly>(type: "date", nullable: false)
+                    id_carro = table.Column<int>(type: "int", nullable: false),
+                    data_locacao = table.Column<DateTime>(type: "date", nullable: false),
+                    data_entrega = table.Column<DateTime>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {

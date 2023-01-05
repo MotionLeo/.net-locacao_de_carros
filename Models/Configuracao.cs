@@ -12,5 +12,5 @@ public record Configuracao
 
     [Required(ErrorMessage = "Esse campo é obrigatório")]
     [Column("dias_de_locacao", TypeName = "date")]
-    public DateOnly DiasDeLocacao { get;set; } = default!;
+    public DateTime DiasDeLocacao { get;set; } = default!;
 }

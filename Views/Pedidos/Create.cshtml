@@ -13,23 +13,31 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="IdCliente" class="control-label"></label>
-                <input asp-for="IdCliente" class="form-control" />
-                <span asp-validation-for="IdCliente" class="text-danger"></span>
+                <label asp-for="IdCliente" class="control-label">Clientes</label><br>
+                <select name="IdCliente" id="IdCliente">
+                    @foreach (var cliente in ViewBag.clientes)
+                    {
+                        <option value="@cliente.Id">@cliente.Id - @cliente.Nome</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="Carro" class="control-label"></label>
-                <input asp-for="Carro" class="form-control" />
-                <span asp-validation-for="Carro" class="text-danger"></span>
+                <label asp-for="IdCarro" class="control-label"></label><br>
+                <select name="IdCarro" id="IdCarro">
+                    @foreach (var carro in ViewBag.carros)
+                    {
+                        <option value="@carro.Id">@carro.Nome</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="DataLocacao" class="control-label"></label>
-                <input asp-for="DataLocacao" class="form-control" />
+                <label asp-for="DataLocacao" class="control-label">Data de locação</label>
+                <input type="date" asp-for="DataLocacao" class="form-control" />
                 <span asp-validation-for="DataLocacao" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DataEntrega" class="control-label"></label>
-                <input asp-for="DataEntrega" class="form-control" />
+                <label asp-for="DataEntrega" class="control-label">Data de Entrega</label>
+                <input type="date" asp-for="DataEntrega" class="form-control" />
                 <span asp-validation-for="DataEntrega" class="text-danger"></span>
             </div>
             <div class="form-group">

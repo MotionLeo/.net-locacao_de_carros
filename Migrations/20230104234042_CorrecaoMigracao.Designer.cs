@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocacaoDeCarros.Migrations
 {
     [DbContext(typeof(DbContexto))]
-    [Migration("20230104141622_PrimeiraMigracao")]
-    partial class PrimeiraMigracao
+    [Migration("20230104234042_CorrecaoMigracao")]
+    partial class CorrecaoMigracao
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,13 +27,13 @@ namespace LocacaoDeCarros.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Marca")
+                    b.Property<int>("IdMarca")
                         .HasColumnType("int")
-                        .HasColumnName("marca");
+                        .HasColumnName("id_marca");
 
-                    b.Property<int>("Modelo")
+                    b.Property<int>("IdModelo")
                         .HasColumnType("int")
-                        .HasColumnName("modelo");
+                        .HasColumnName("id_modelo");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -80,7 +80,7 @@ namespace LocacaoDeCarros.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("DiasDeLocacao")
+                    b.Property<DateTime>("DiasDeLocacao")
                         .HasColumnType("date")
                         .HasColumnName("dias_de_locacao");
 
@@ -127,17 +127,17 @@ namespace LocacaoDeCarros.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Carro")
-                        .HasColumnType("int")
-                        .HasColumnName("carro");
-
-                    b.Property<DateOnly>("DataEntrega")
+                    b.Property<DateTime>("DataEntrega")
                         .HasColumnType("date")
                         .HasColumnName("data_entrega");
 
-                    b.Property<DateOnly>("DataLocacao")
+                    b.Property<DateTime>("DataLocacao")
                         .HasColumnType("date")
                         .HasColumnName("data_locacao");
+
+                    b.Property<int>("IdCarro")
+                        .HasColumnType("int")
+                        .HasColumnName("id_carro");
 
                     b.Property<int>("IdCliente")
                         .HasColumnType("int")

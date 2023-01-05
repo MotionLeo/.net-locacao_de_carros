@@ -14,13 +14,13 @@ public record Pedido
     [Column("id_cliente")]
     public int IdCliente { get;set; }
 
-    [Column("carro")]
-    public int Carro {get; set;}
+    [Column("id_carro")]
+    public int IdCarro {get; set;}
 
     [Column("data_locacao", TypeName = "date")]
 
-    public DateOnly DataLocacao {get; set;} = default!;
+    public DateTime DataLocacao {get; set;} = default!;
 
     [Column("data_entrega", TypeName = "date")]
-    public DateOnly DataEntrega {get; set;} = default!;
+    public DateTime DataEntrega {get; set;} = default!;
 }

@@ -1,3 +1,5 @@
+@using LocacaoDeCarros.Models
+@using LocacaoDeCarros.Controllers
 @model LocacaoDeCarros.Models.Carro
 
 @{
@@ -17,14 +19,22 @@
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Marca" class="control-label"></label>
-                <input asp-for="Marca" class="form-control" />
-                <span asp-validation-for="Marca" class="text-danger"></span>
+                <label asp-for="IdMarca" class="control-label">Marca</label><br>
+                <select name="IdMarca" id="IdMarca">
+                    @foreach (var marca in ViewBag.marcas)
+                    {
+                        <option value="@marca.Id">@marca.Nome</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="Modelo" class="control-label"></label>
-                <input asp-for="Modelo" class="form-control" />
-                <span asp-validation-for="Modelo" class="text-danger"></span>
+                <label asp-for="IdModelo" class="control-label">Modelo</label><br>
+                <select name="IdModelo" id="IdModelo">
+                    @foreach (var modelo in ViewBag.modelos)
+                    {
+                        <option value="@modelo.Id">@modelo.Nome</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Cadastrar" class="btn btn-primary" />

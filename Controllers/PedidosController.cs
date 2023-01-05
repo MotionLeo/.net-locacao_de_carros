@@ -22,20 +22,20 @@ namespace LocacaoDeCarros.Controllers
         // GET: Pedidos
         public async Task<IActionResult> Index()
         {
-              return _context.Pedido != null ? 
-                          View(await _context.Pedido.ToListAsync()) :
+              return _context.Pedidos != null ? 
+                          View(await _context.Pedidos.ToListAsync()) :
                           Problem("Entity set 'DbContexto.Pedido'  is null.");
         }
 
         // GET: Pedidos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Pedido == null)
+            if (id == null || _context.Pedidos == null)
             {
                 return NotFound();
             }
 
-            var pedido = await _context.Pedido
+            var pedido = await _context.Pedidos
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pedido == null)
             {
@@ -48,6 +48,8 @@ namespace LocacaoDeCarros.Controllers
         // GET: Pedidos/Create
         public IActionResult Create()
         {
+            ViewBag.clientes = _context.Clientes.ToList();
+            ViewBag.carros = _context.Carros.ToList();
             return View();
         }
 
@@ -56,7 +58,7 @@ namespace LocacaoDeCarros.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,IdCliente,Carro,DataLocacao,DataEntrega")] Pedido pedido)
+        public async Task<IActionResult> Create([Bind("Id,IdCliente,IdCarro,DataLocacao,DataEntrega")] Pedido pedido)
         {
             if (ModelState.IsValid)
             {
@@ -70,12 +72,12 @@ namespace LocacaoDeCarros.Controllers
         // GET: Pedidos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Pedido == null)
+            if (id == null || _context.Pedidos == null)
             {
                 return NotFound();
             }
 
-            var pedido = await _context.Pedido.FindAsync(id);
+            var pedido = await _context.Pedidos.FindAsync(id);
             if (pedido == null)
             {
                 return NotFound();
@@ -88,7 +90,7 @@ namespace LocacaoDeCarros.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,IdCliente,Carro,DataLocacao,DataEntrega")] Pedido pedido)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,IdCliente,IdCarro,DataLocacao,DataEntrega")] Pedido pedido)
         {
             if (id != pedido.Id)
             {
@@ -121,12 +123,12 @@ namespace LocacaoDeCarros.Controllers
         // GET: Pedidos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Pedido == null)
+            if (id == null || _context.Pedidos == null)
             {
                 return NotFound();
             }
 
-            var pedido = await _context.Pedido
+            var pedido = await _context.Pedidos
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (pedido == null)
             {
@@ -141,14 +143,14 @@ namespace LocacaoDeCarros.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Pedido == null)
+            if (_context.Pedidos == null)
             {
                 return Problem("Entity set 'DbContexto.Pedido'  is null.");
             }
-            var pedido = await _context.Pedido.FindAsync(id);
+            var pedido = await _context.Pedidos.FindAsync(id);
             if (pedido != null)
             {
-                _context.Pedido.Remove(pedido);
+                _context.Pedidos.Remove(pedido);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +159,7 @@ namespace LocacaoDeCarros.Controllers
 
         private bool PedidoExists(int id)
         {
-          return (_context.Pedido?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Pedidos?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

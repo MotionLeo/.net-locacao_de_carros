@@ -22,20 +22,20 @@ namespace LocacaoDeCarros.Controllers
         // GET: Configuracoes
         public async Task<IActionResult> Index()
         {
-              return _context.Configuracao != null ? 
-                          View(await _context.Configuracao.ToListAsync()) :
+              return _context.Configuracoes != null ? 
+                          View(await _context.Configuracoes.ToListAsync()) :
                           Problem("Entity set 'DbContexto.Configuracao'  is null.");
         }
 
         // GET: Configuracoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Configuracao == null)
+            if (id == null || _context.Configuracoes == null)
             {
                 return NotFound();
             }
 
-            var configuracao = await _context.Configuracao
+            var configuracao = await _context.Configuracoes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (configuracao == null)
             {
@@ -70,12 +70,12 @@ namespace LocacaoDeCarros.Controllers
         // GET: Configuracoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Configuracao == null)
+            if (id == null || _context.Configuracoes == null)
             {
                 return NotFound();
             }
 
-            var configuracao = await _context.Configuracao.FindAsync(id);
+            var configuracao = await _context.Configuracoes.FindAsync(id);
             if (configuracao == null)
             {
                 return NotFound();
@@ -121,12 +121,12 @@ namespace LocacaoDeCarros.Controllers
         // GET: Configuracoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Configuracao == null)
+            if (id == null || _context.Configuracoes == null)
             {
                 return NotFound();
             }
 
-            var configuracao = await _context.Configuracao
+            var configuracao = await _context.Configuracoes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (configuracao == null)
             {
@@ -141,14 +141,14 @@ namespace LocacaoDeCarros.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Configuracao == null)
+            if (_context.Configuracoes == null)
             {
                 return Problem("Entity set 'DbContexto.Configuracao'  is null.");
             }
-            var configuracao = await _context.Configuracao.FindAsync(id);
+            var configuracao = await _context.Configuracoes.FindAsync(id);
             if (configuracao != null)
             {
-                _context.Configuracao.Remove(configuracao);
+                _context.Configuracoes.Remove(configuracao);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +157,7 @@ namespace LocacaoDeCarros.Controllers
 
         private bool ConfiguracaoExists(int id)
         {
-          return (_context.Configuracao?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Configuracoes?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

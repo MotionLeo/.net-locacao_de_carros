@@ -22,20 +22,20 @@ namespace LocacaoDeCarros.Controllers
         // GET: Marcas
         public async Task<IActionResult> Index()
         {
-              return _context.Marca != null ? 
-                          View(await _context.Marca.ToListAsync()) :
+              return _context.Marcas != null ? 
+                          View(await _context.Marcas.ToListAsync()) :
                           Problem("Entity set 'DbContexto.Marca'  is null.");
         }
 
         // GET: Marcas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Marca == null)
+            if (id == null || _context.Marcas == null)
             {
                 return NotFound();
             }
 
-            var marca = await _context.Marca
+            var marca = await _context.Marcas
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (marca == null)
             {
@@ -70,12 +70,12 @@ namespace LocacaoDeCarros.Controllers
         // GET: Marcas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Marca == null)
+            if (id == null || _context.Marcas == null)
             {
                 return NotFound();
             }
 
-            var marca = await _context.Marca.FindAsync(id);
+            var marca = await _context.Marcas.FindAsync(id);
             if (marca == null)
             {
                 return NotFound();
@@ -121,12 +121,12 @@ namespace LocacaoDeCarros.Controllers
         // GET: Marcas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Marca == null)
+            if (id == null || _context.Marcas == null)
             {
                 return NotFound();
             }
 
-            var marca = await _context.Marca
+            var marca = await _context.Marcas
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (marca == null)
             {
@@ -141,14 +141,14 @@ namespace LocacaoDeCarros.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Marca == null)
+            if (_context.Marcas == null)
             {
                 return Problem("Entity set 'DbContexto.Marca'  is null.");
             }
-            var marca = await _context.Marca.FindAsync(id);
+            var marca = await _context.Marcas.FindAsync(id);
             if (marca != null)
             {
-                _context.Marca.Remove(marca);
+                _context.Marcas.Remove(marca);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +157,7 @@ namespace LocacaoDeCarros.Controllers
 
         private bool MarcaExists(int id)
         {
-          return (_context.Marca?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Marcas?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

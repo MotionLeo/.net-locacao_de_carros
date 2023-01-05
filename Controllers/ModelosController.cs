@@ -22,20 +22,20 @@ namespace LocacaoDeCarros.Controllers
         // GET: Modelos
         public async Task<IActionResult> Index()
         {
-              return _context.Modelo != null ? 
-                          View(await _context.Modelo.ToListAsync()) :
+              return _context.Modelos != null ? 
+                          View(await _context.Modelos.ToListAsync()) :
                           Problem("Entity set 'DbContexto.Modelo'  is null.");
         }
 
         // GET: Modelos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Modelo == null)
+            if (id == null || _context.Modelos == null)
             {
                 return NotFound();
             }
 
-            var modelo = await _context.Modelo
+            var modelo = await _context.Modelos
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (modelo == null)
             {
@@ -70,12 +70,12 @@ namespace LocacaoDeCarros.Controllers
         // GET: Modelos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Modelo == null)
+            if (id == null || _context.Modelos == null)
             {
                 return NotFound();
             }
 
-            var modelo = await _context.Modelo.FindAsync(id);
+            var modelo = await _context.Modelos.FindAsync(id);
             if (modelo == null)
             {
                 return NotFound();
@@ -121,12 +121,12 @@ namespace LocacaoDeCarros.Controllers
         // GET: Modelos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Modelo == null)
+            if (id == null || _context.Modelos == null)
             {
                 return NotFound();
             }
 
-            var modelo = await _context.Modelo
+            var modelo = await _context.Modelos
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (modelo == null)
             {
@@ -141,14 +141,14 @@ namespace LocacaoDeCarros.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Modelo == null)
+            if (_context.Modelos == null)
             {
                 return Problem("Entity set 'DbContexto.Modelo'  is null.");
             }
-            var modelo = await _context.Modelo.FindAsync(id);
+            var modelo = await _context.Modelos.FindAsync(id);
             if (modelo != null)
             {
-                _context.Modelo.Remove(modelo);
+                _context.Modelos.Remove(modelo);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +157,7 @@ namespace LocacaoDeCarros.Controllers
 
         private bool ModeloExists(int id)
         {
-          return (_context.Modelo?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Modelos?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

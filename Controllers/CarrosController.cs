@@ -22,20 +22,23 @@ namespace LocacaoDeCarros.Controllers
         // GET: Carros
         public async Task<IActionResult> Index()
         {
-              return _context.Carro != null ? 
-                          View(await _context.Carro.ToListAsync()) :
+              return _context.Carros != null ? 
+                          View(await _context.Carros.ToListAsync()) :
                           Problem("Entity set 'DbContexto.Carro'  is null.");
         }
 
+        /*public IActionResult TodasMarcas(){
+            return _context.Marca 
+        }*/
         // GET: Carros/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Carro == null)
+            if (id == null || _context.Carros == null)
             {
                 return NotFound();
             }
 
-            var carro = await _context.Carro
+            var carro = await _context.Carros
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (carro == null)
             {
@@ -48,6 +51,8 @@ namespace LocacaoDeCarros.Controllers
         // GET: Carros/Create
         public IActionResult Create()
         {
+            ViewBag.marcas = _context.Marcas.ToList();
+            ViewBag.modelos = _context.Modelos.ToList();
             return View();
         }
 
@@ -56,7 +61,7 @@ namespace LocacaoDeCarros.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Marca,Modelo")] Carro carro)
+        public async Task<IActionResult> Create([Bind("Id,Nome,IdMarca,IdModelo")] Carro carro)
         {
             if (ModelState.IsValid)
             {
@@ -70,12 +75,15 @@ namespace LocacaoDeCarros.Controllers
         // GET: Carros/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Carro == null)
+            ViewBag.marcas = _context.Marcas.ToList();
+            ViewBag.modelos = _context.Modelos.ToList();
+            
+            if (id == null || _context.Carros == null)
             {
                 return NotFound();
             }
 
-            var carro = await _context.Carro.FindAsync(id);
+            var carro = await _context.Carros.FindAsync(id);
             if (carro == null)
             {
                 return NotFound();
@@ -88,7 +96,7 @@ namespace LocacaoDeCarros.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Marca,Modelo")] Carro carro)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,IdMarca,IdModelo")] Carro carro)
         {
             if (id != carro.Id)
             {
@@ -121,12 +129,12 @@ namespace LocacaoDeCarros.Controllers
         // GET: Carros/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Carro == null)
+            if (id == null || _context.Carros == null)
             {
                 return NotFound();
             }
 
-            var carro = await _context.Carro
+            var carro = await _context.Carros
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (carro == null)
             {
@@ -141,14 +149,14 @@ namespace LocacaoDeCarros.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Carro == null)
+            if (_context.Carros == null)
             {
                 return Problem("Entity set 'DbContexto.Carro'  is null.");
             }
-            var carro = await _context.Carro.FindAsync(id);
+            var carro = await _context.Carros.FindAsync(id);
             if (carro != null)
             {
-                _context.Carro.Remove(carro);
+                _context.Carros.Remove(carro);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +165,7 @@ namespace LocacaoDeCarros.Controllers
 
         private bool CarroExists(int id)
         {
-          return (_context.Carro?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Carros?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
