@@ -22,10 +22,17 @@ namespace LocacaoDeCarros.Controllers
         // GET: Modelos
         public async Task<IActionResult> Index()
         {
-              return _context.Modelos != null ? 
-                          View(await _context.Modelos.ToListAsync()) :
-                          Problem("Entity set 'DbContexto.Modelo'  is null.");
+            var locacaoContext = _context.Modelos.Include(m => m.Marca);
+            return View(await locacaoContext.ToListAsync());
         }
+
+        [Route("/modelos.json")]
+        public async Task<IActionResult> JsonFiltradoMarca(int idMarca)
+        {
+            var locacaoContext = _context.Modelos.Where(m => m.IdMarca == idMarca);
+            return StatusCode(200, await locacaoContext.ToListAsync());
+        }
+
 
         // GET: Modelos/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -36,6 +43,7 @@ namespace LocacaoDeCarros.Controllers
             }
 
             var modelo = await _context.Modelos
+                .Include(m => m.Marca)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (modelo == null)
             {
@@ -48,6 +56,7 @@ namespace LocacaoDeCarros.Controllers
         // GET: Modelos/Create
         public IActionResult Create()
         {
+            PreencheViewDataMarcaId();
             return View();
         }
 
@@ -56,7 +65,7 @@ namespace LocacaoDeCarros.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome")] Modelo modelo)
+        public async Task<IActionResult> Create([Bind("Id,Nome, IdMarca")] Modelo modelo)
         {
             if (ModelState.IsValid)
             {
@@ -64,6 +73,7 @@ namespace LocacaoDeCarros.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            PreencheViewDataMarcaId(modelo.IdMarca);
             return View(modelo);
         }
 
@@ -80,6 +90,7 @@ namespace LocacaoDeCarros.Controllers
             {
                 return NotFound();
             }
+            PreencheViewDataMarcaId(modelo.IdMarca);
             return View(modelo);
         }
 
@@ -88,7 +99,7 @@ namespace LocacaoDeCarros.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome")] Modelo modelo)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,IdMarca")] Modelo modelo)
         {
             if (id != modelo.Id)
             {
@@ -115,6 +126,7 @@ namespace LocacaoDeCarros.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            PreencheViewDataMarcaId(modelo.IdMarca);
             return View(modelo);
         }
 
@@ -127,6 +139,7 @@ namespace LocacaoDeCarros.Controllers
             }
 
             var modelo = await _context.Modelos
+                .Include(m => m.Marca)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (modelo == null)
             {
@@ -158,6 +171,11 @@ namespace LocacaoDeCarros.Controllers
         private bool ModeloExists(int id)
         {
           return (_context.Modelos?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        private void PreencheViewDataMarcaId(int? id = null)
+        {
+            ViewData["IdMarca"] = new SelectList(_context.Marcas, "Id", "Nome", id);
         }
     }
 }

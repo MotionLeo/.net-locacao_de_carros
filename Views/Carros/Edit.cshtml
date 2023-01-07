@@ -17,22 +17,24 @@
                 <input asp-for="Nome" class="form-control" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
-            <div class="form-group">
+             <div class="form-group">
                 <label asp-for="IdMarca" class="control-label">Marca</label><br>
-                <select name="IdMarca" id="IdMarca">
+                <select name="IdMarca" id="IdMarca" asp-items="ViewBag.IdMarca" onchange="app.carregaModelosJsVanilla(this)">
+                    <!-- Utilizando a viewbag, aqui recebe os dados dela e põe num foreach
                     @foreach (var marca in ViewBag.marcas)
                     {
                         <option value="@marca.Id">@marca.Nome</option>
-                    }
+                    } -->
                 </select>
             </div>
             <div class="form-group">
                 <label asp-for="IdModelo" class="control-label">Modelo</label><br>
-                <select name="IdModelo" id="IdModelo">
+                <select name="IdModelo" id="IdModelo" asp-items="ViewBag.IdModelo">
+                    <!-- Utilizando a viewbag, aqui recebe os dados dela e põe num foreach
                     @foreach (var modelo in ViewBag.modelos)
                     {
                         <option value="@modelo.Id">@modelo.Nome</option>
-                    }
+                    } -->
                 </select>
             </div>
             <div class="form-group">

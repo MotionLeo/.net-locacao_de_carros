@@ -13,4 +13,9 @@ public record Modelo
     [Required(ErrorMessage = "Nome do modelo é obrigatório")]
     [Column("nome", TypeName = "varchar(100)")]
     public string Nome { get;set; } = default!;
+
+    [Column("id_marca")]
+    [ForeignKey("Marca")]
+    public int IdMarca { get;set; } = default!;
+    public Marca? Marca { get;set; }
 }

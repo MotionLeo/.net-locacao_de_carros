@@ -1,5 +1,3 @@
-@using LocacaoDeCarros.Models
-@using LocacaoDeCarros.Controllers
 @model LocacaoDeCarros.Models.Carro
 
 @{
@@ -20,21 +18,21 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdMarca" class="control-label">Marca</label><br>
-                <select name="IdMarca" id="IdMarca">
+                <select asp-for= "IdMarca" asp-items="ViewBag.IdMarca"></select>
+                    <!-- Utilizando a viewbag, aqui recebe os dados dela e põe num foreach
                     @foreach (var marca in ViewBag.marcas)
                     {
                         <option value="@marca.Id">@marca.Nome</option>
-                    }
-                </select>
+                    } -->
             </div>
             <div class="form-group">
                 <label asp-for="IdModelo" class="control-label">Modelo</label><br>
-                <select name="IdModelo" id="IdModelo">
+                <select asp-for="IdModelo" asp-items="ViewBag.IdModelo"></select>
+                    <!-- Utilizando a viewbag, aqui recebe os dados dela e põe num foreach
                     @foreach (var modelo in ViewBag.modelos)
                     {
                         <option value="@modelo.Id">@modelo.Nome</option>
-                    }
-                </select>
+                    } -->
             </div>
             <div class="form-group">
                 <input type="submit" value="Cadastrar" class="btn btn-primary" />

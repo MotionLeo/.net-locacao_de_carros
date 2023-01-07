@@ -12,10 +12,14 @@ public record Pedido
 
     [Required(ErrorMessage = "Nome é obrigatório")]
     [Column("id_cliente")]
+    [ForeignKey("Cliente")]
     public int IdCliente { get;set; }
+    public Cliente? Cliente {get; set;}
 
     [Column("id_carro")]
+    [ForeignKey("Carro")]
     public int IdCarro {get; set;}
+    public Carro? Carro {get; set;}
 
     [Column("data_locacao", TypeName = "date")]
 

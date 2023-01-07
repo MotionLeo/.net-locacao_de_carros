@@ -14,11 +14,17 @@ public record Carro
     [Required(ErrorMessage = "Nome do carro é obrigatório")]
     public string Nome { get;set; } = default!;
 
-    [Column("id_marca")]
-    [Required(ErrorMessage = "Número da marca é obrigatório")]
-    public int IdMarca {get; set;}
-
     [Column("id_modelo")]
+    [ForeignKey("Modelo")]
     [Required(ErrorMessage = "Número do modelo é obrigatório")]
     public int IdModelo {get; set;}
+    public Modelo? Modelo {get; set;}
+    
+    [Column("id_marca")]
+    [ForeignKey("Marca")]
+    [Required(ErrorMessage = "Número da marca é obrigatório")]
+    public int IdMarca {get; set;}
+    public Marca? Marca {get; set;}
+
+
 }

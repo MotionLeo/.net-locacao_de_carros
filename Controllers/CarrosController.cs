@@ -22,9 +22,8 @@ namespace LocacaoDeCarros.Controllers
         // GET: Carros
         public async Task<IActionResult> Index()
         {
-              return _context.Carros != null ? 
-                          View(await _context.Carros.ToListAsync()) :
-                          Problem("Entity set 'DbContexto.Carro'  is null.");
+            var locacaoContext = _context.Carros.Include(c => c.Marca).Include(c => c.Modelo);
+            return View(await locacaoContext.ToListAsync());
         }
 
         /*public IActionResult TodasMarcas(){
@@ -39,6 +38,8 @@ namespace LocacaoDeCarros.Controllers
             }
 
             var carro = await _context.Carros
+                .Include(c => c.Marca)
+                .Include(c => c.Modelo)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (carro == null)
             {
@@ -51,8 +52,16 @@ namespace LocacaoDeCarros.Controllers
         // GET: Carros/Create
         public IActionResult Create()
         {
+            var marcas = _context.Marcas.ToList();
+            var idMarca = marcas[0].Id;
+            var modelos = _context.Modelos.Where(m => m.IdMarca == idMarca).ToList();
+
+            ViewData["IdMarca"] = new SelectList(marcas, "Id", "Nome");
+            ViewData["IdModelo"] = new SelectList(modelos, "Id", "Nome");
+            /*Utilizando Viewbag para exibir num loop no select do html
             ViewBag.marcas = _context.Marcas.ToList();
             ViewBag.modelos = _context.Modelos.ToList();
+            */
             return View();
         }
 
@@ -61,7 +70,7 @@ namespace LocacaoDeCarros.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,IdMarca,IdModelo")] Carro carro)
+        public async Task<IActionResult> Create([Bind("Id,Nome,IdModelo,IdMarca")] Carro carro)
         {
             if (ModelState.IsValid)
             {
@@ -69,14 +78,17 @@ namespace LocacaoDeCarros.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdMarca"] = new SelectList(_context.Marcas, "Id", "Nome", carro.IdMarca);
+            ViewData["IdModelo"] = new SelectList(_context.Modelos, "Id", "Nome", carro.IdModelo);
             return View(carro);
         }
 
         // GET: Carros/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            /*Utilizando viewbag
             ViewBag.marcas = _context.Marcas.ToList();
-            ViewBag.modelos = _context.Modelos.ToList();
+            ViewBag.modelos = _context.Modelos.ToList(); */
             
             if (id == null || _context.Carros == null)
             {
@@ -88,6 +100,9 @@ namespace LocacaoDeCarros.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["IdMarca"] = new SelectList(_context.Marcas, "Id", "Nome", carro.IdMarca);
+            ViewData["IdModelo"] = new SelectList(_context.Modelos, "Id", "Nome", carro.IdModelo);
             return View(carro);
         }
 
@@ -96,7 +111,7 @@ namespace LocacaoDeCarros.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,IdMarca,IdModelo")] Carro carro)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,IdModelo,IdMarca")] Carro carro)
         {
             if (id != carro.Id)
             {
@@ -123,6 +138,8 @@ namespace LocacaoDeCarros.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["IdMarca"] = new SelectList(_context.Marcas, "Id", "Nome", carro.IdMarca);
+            ViewData["IdModelo"] = new SelectList(_context.Modelos, "Id", "Nome", carro.IdModelo);
             return View(carro);
         }
 
@@ -135,6 +152,8 @@ namespace LocacaoDeCarros.Controllers
             }
 
             var carro = await _context.Carros
+                .Include(c => c.Marca)
+                .Include(c => c.Modelo)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (carro == null)
             {
